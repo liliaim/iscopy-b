@@ -19,7 +19,12 @@ def create
     render "new", status: :unprocessable_entity
   end
 end
-
+def show
+  @spot = Spot.new
+  @plan = Plan.find(params[:id])
+  @spots = Spot.where(user_id: @plan.user_id, prefecture_id: @plan.prefecture_id)
+ 
+end
   private
 
   def move_to_index

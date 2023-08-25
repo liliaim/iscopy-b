@@ -1,0 +1,91 @@
+        <!-- Header-->
+        <header class="py-5">
+            <div class="container px-lg-5">
+                <div class="p-4 p-lg-5 bg-light rounded-3 text-left">
+                    <div class="m-4 m-lg-5">
+                        <h1 class="display-6 fw-bold"><%= @plan.prefecture.name%><%= @plan.city%>への旅</h1>
+                        <p class="fs-4"><%= @plan.start_date%>～<%= @plan.end_date%></p>
+                        <h5 class="display-8 fw-bold">目的地：<%= @plan.destination%></h5>
+                        <p class="fs-8">行きたい場所や旅の目的：<%= @plan.text%></p>
+                        <a class="btn btn-primary btn-lg" href="#!">編集する</a>
+                        <a class="btn btn-secondary btn-lg" href="#!">削除</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Page Content-->
+        <section class="pt-4">
+            <div class="container px-lg-5">
+            <!-- Page Features-->
+                <div class="row gx-lg-5">
+                    <% @spots.each do |spot|%>
+                    <div class="col-md-4 mb-5">
+                        <div class="card bg-light  h-100">
+                            <div class="card-body">
+                                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="fa-solid <%=spot.icon.value%>"></i></div>
+                                <h2 class="card-title"><%= spot.spot_name%></h2>
+                                <%# <h4 class="card-title"><%= spot.spot_name%></h4>
+                                <p class="card-text"><%= spot.information%></p>
+                                <%# <h2 class="fs-4 fw-bold">Fresh new layout</h2> %>
+                                <%# <p class="mb-0">With Bootstrap 5, we've created a fresh new layout for this template!</p> %>
+                            </div>
+                        </div>
+                    </div>
+                    <%end%>
+                    <div class="row gx-lg-5">
+                    <div class="col-lg-6 col-xxl-4 mb-5">
+                      <div class="card h-100">
+                        <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <h2 class="fs-4 fw-bold"><%=@plan.prefecture.name%>の新しいスポットを登録</h2>
+                        <%= form_with model: @spot, local: true do |f| %>
+                        <%= render 'shared/error_messages', model: f.object%>
+                        <!-- Phone number input-->
+                        <div class="form-floating mb-3">
+                            <%= f.collection_select(:icon_id, Icon.all, :id, :name, {}, {class:"form-control"}) %>
+                            <label for="icon_id">種類（必須）</label>
+                            <div class="invalid-feedback" data-sb-feedback="icon_id:required">種類を選択してください</div>
+                        </div>
+                        <!-- Name input-->
+                        <div class="form-floating mb-3">
+                            <%= f.text_field :spot_name, class:"form-control", id:"spot_name", type:"text", placeholder:"別府温泉" %>
+                            <label for="spot_name">スポット名（必須）</label>
+                            <div class="invalid-feedback" data-sb-feedback="name:required">スポット名を入力してください</div>
+                        </div>
+                        <!-- Information input-->
+                        <div class="form-floating mb-3">
+                            <%= f.text_field :information, class:"form-control", id:"information", type:"text", placeholder:"有名な温泉" , style:"height: 10rem"%>
+                            <label for="information">詳細</label>
+                        </div>
+                        <!-- Phone number input-->
+                        <%# <div class="form-floating mb-3"> %>
+                            <%# <%= f.text_field :prefecture_id, class:"form-control", id:"prefecture_id", type:"text", value:@plan.prefecture.name %>
+                            <%# <label for="prefecture_id">都道府県</label> %>
+                        <%= f.hidden_field :prefecture_id, value: @plan.prefecture_id, id:"prefecture_id" %>
+                        <%# </div> %>
+                        <input value=<%=@plan.id%> name='plan_id' type="hidden">
+                        <!-- Submit success message-->
+                        <!---->
+                        <!-- This is what your users will see when the form-->
+                        <!-- has successfully submitted-->
+                        <div class="d-none" id="submitSuccessMessage">
+                            <div class="text-center mb-3">
+                                <div class="fw-bolder">Form submission successful!</div>
+                            </div>
+                        </div>
+                        <!-- Submit error message-->
+                        <!---->
+                        <!-- This is what your users will see when there is-->
+                        <!-- an error submitting the form-->
+                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                        <!-- Submit Button-->
+                        <div class="d-grid">
+                                <%= f.submit "Submit", class:"btn btn-primary btn-lg" %>
+                        </div>
+                    <%# </form> %>
+                  <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
