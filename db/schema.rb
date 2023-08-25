@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_24_033714) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_24_134624) do
   create_table "plans", charset: "utf8", force: :cascade do |t|
     t.string "destination", null: false
     t.string "text", null: false
@@ -39,6 +39,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_033714) do
     t.index ["user_id"], name: "index_records_on_user_id"
   end
 
+  create_table "spots", charset: "utf8", force: :cascade do |t|
+    t.integer "icon_id", null: false
+    t.string "spot_name", null: false
+    t.text "information"
+    t.integer "prefecture_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_spots_on_user_id"
+  end
+
   create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "nickname", default: "", null: false
     t.string "email", default: "", null: false
@@ -55,4 +66,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_24_033714) do
   add_foreign_key "plans", "users"
   add_foreign_key "records", "plans"
   add_foreign_key "records", "users"
+  add_foreign_key "spots", "users"
 end

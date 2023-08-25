@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   resources :plans
   resources :records
   resources :users, only: :show
+  resources :spots
 
 end
